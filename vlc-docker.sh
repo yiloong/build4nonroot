@@ -181,12 +181,34 @@ cp /usr/lib/x86_64-linux-gnu/libQt5Svg.so.5 .
 cp /usr/lib/x86_64-linux-gnu/libpcre16.so.3 .
 cp /usr/lib/x86_64-linux-gnu/libcrystalhd.so.3 .
 cp /usr/lib/x86_64-linux-gnu/libass.so.9 .
+cp /usr/lib/x86_64-linux-gnu/libssh-gcrypt.so.4 .
+cp /usr/lib/x86_64-linux-gnu/libssh-gcrypt_threads.so.4 .
+cp /usr/lib/x86_64-linux-gnu/libavformat.so.57 .
+cp /usr/lib/x86_64-linux-gnu/libpostproc.so.54 .
+cp /usr/lib/x86_64-linux-gnu/libvncclient.so.1 .
+cp /usr/lib/x86_64-linux-gnu/libxcb-composite.so.0 .
+cp /usr/lib/x86_64-linux-gnu/libwebpmux.so.3 .
+cp /usr/lib/x86_64-linux-gnu/libchromaprint.so.1 .
+cp /usr/lib/x86_64-linux-gnu/libopenmpt.so.0 .
+cp /usr/lib/x86_64-linux-gnu/libgme.so.0 .
+cp /usr/lib/x86_64-linux-gnu/libhardsid-builder.so.0 .
+cp /usr/lib/x86_64-linux-gnu/libresid-builder.so.0 .
+cp /usr/lib/x86_64-linux-gnu/libsidplay2.so.1 .
+cp /usr/lib/x86_64-linux-gnu/libssh2.so.1 .
+cp /usr/lib/x86_64-linux-gnu/libdc1394.so.22 .
+cp /usr/lib/x86_64-linux-gnu/libsndio.so.6.1 .
+cp /usr/lib/x86_64-linux-gnu/libthreadutil.so.6 .
 mkdir own && cd own
 cp -d /usr/local/lib/lib* .
 cp -d /usr/local/lib/x86_64-linux-gnu/lib* .
 
-echo "SUCCESS"
+echo "Build sucessfully"
+END_TIME=$(date +%s)
+echo "time to build: $((END_TIME-START_TIME))s"
 exit 0
+# Then need to tar /usr/local/lib
+## END
+
 
 # for Ubuntu 20.04
 mkdir upload
@@ -241,13 +263,6 @@ cp /usr/lib/x86_64-linux-gnu/libQt5Core.so.5 .
 cp /usr/lib/x86_64-linux-gnu/libQt5Widgets.so.5 .
 cp /usr/lib/x86_64-linux-gnu/libQt5Svg.so.5 .
 cp /usr/lib/x86_64-linux-gnu/libpcre2-16.so.0 .
-
-echo "Build sucessfully"
-END_TIME=$(date +%s)
-echo "time to build: $((END_TIME-START_TIME))s"
-
-# Then need to tar /usr/local/lib
-## END
 
 # libva.txt
 apt-get build-dep libva
