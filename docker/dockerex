@@ -1,0 +1,23 @@
+docker run --rm --memory="256m" --cpus="1.0" -p 55520:4200 -e SIAB_PASSWORD=19950205 -e SIAB_USER=jack -e SIAB_HOME=/home/jack -e SIAB_SSL=false -e SIAB_SUDO=true sspreitzer/shellinabox:latest
+
+cat <<EOF | tee /etc/apt/sources.list
+deb http://mirrors.zju.edu.cn/ubuntu bionic main universe restricted multiverse
+deb http://mirrors.zju.edu.cn/ubuntu bionic-security main universe restricted multiverse
+deb http://mirrors.zju.edu.cn/ubuntu bionic-updates main universe restricted multiverse
+deb http://mirrors.zju.edu.cn/ubuntu bionic-backports main universe restricted multiverse
+EOF
+
+docker run --memory="256m" --cpus="1.0" -p 55520:4200 -it ubuntu:18.04
+
+vim.tiny /etc/default/shellinabox ADD -t
+vi /etc/securetty 
+ADD
+pts/0
+pts/1
+
+service shellinabox restart
+
+docker container start sad_tu
+docker exec -it sad_tu bash
+
+docker run -p 55522:22 -it ubuntu:zju

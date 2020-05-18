@@ -1,0 +1,256 @@
+#!/bin/bash
+# Ubuntu 20.04 client need to install qt5-gtk-platformtheme
+# Updated on 2020-05-11 for vlc-3.0.10
+set -e
+apt install -y bash-completion build-essential wget cmake unzip libgstreamer-plugins-base1.0-dev nasm ninja-build libpcsclite-dev libglib2.0-dev cmake-curses-gui pigz python3-setuptools bash-completion
+apt-get build-dep -y vlc
+
+START_TIME=$(date +%s)
+BUILD_PATH=$PWD
+
+cd $BUILD_PATH
+# https://github.com/mesonbuild/meson/releases
+wget 172.17.0.1:8000/docker/meson-0.54.1.tar.gz
+tar xf meson-0.54.1.tar.gz
+cd meson-0.54.1
+python3 setup.py install
+
+cd $BUILD_PATH
+# https://github.com/videolabs/libdsm/releases
+wget 172.17.0.1:8000/docker/libdsm-0.3.2.tar.gz
+tar xf libdsm-0.3.2.tar.gz
+cd libdsm-0.3.2
+./configure
+make -j2
+make install
+
+cd $BUILD_PATH
+# https://github.com/Matroska-Org/libebml/releases
+wget 172.17.0.1:8000/docker/libebml-release-1.3.10.tar.gz
+tar xf libebml-release-1.3.10.tar.gz
+cd libebml-release-1.3.10/
+mkdir build
+cd build
+cmake -DBUILD_SHARED_LIBS=YES ..
+make -j2
+make install
+
+cd $BUILD_PATH
+# https://launchpad.net/ubuntu/focal/+source/aom
+wget 172.17.0.1:8000/docker/aom_1.0.0.errata1.orig.tar.xz
+tar xf aom_1.0.0.errata1.orig.tar.xz
+cd aom-1.0.0.errata1/
+mkdir my
+cd my/
+cmake ..
+make -j4
+make install
+
+cd $BUILD_PATH
+# https://code.videolan.org/videolan/dav1d
+wget 172.17.0.1:8000/docker/dav1d-0.5.2.tar.bz2
+tar xf dav1d-0.5.2.tar.bz2
+cd dav1d-0.5.2
+meson builddir && cd builddir
+ninja
+ninja install
+
+cd $BUILD_PATH
+wget 172.17.0.1:8000/vlcbuild/schroedinger-1.0.11.tar.gz
+tar xf schroedinger-1.0.11.tar.gz
+cd schroedinger-1.0.11
+./configure
+make -j4
+make install
+
+cd $BUILD_PATH
+wget 172.17.0.1:8000/docker/fluidlite.zip
+unzip -q fluidlite.zip
+cd FluidLite-master/
+mkdir build
+cd build/
+cmake ..
+make
+make install
+
+cd $BUILD_PATH
+wget 172.17.0.1:8000/docker/aribb25-0.2.7.tar.bz2
+tar xf aribb25-0.2.7.tar.bz2
+cd aribb25-0.2.7
+./bootstrap
+#apt install libpcsclite-dev
+./configure
+make
+make install
+
+cd $BUILD_PATH
+# https://github.com/Haivision/srt/releases
+wget 172.17.0.1:8000/docker/srt-1.4.1.tar.gz
+tar xf srt-1.4.1.tar.gz
+cd srt-1.4.1/
+# ?? ./configure
+#  -bash: ./configure: /usr/bin/tclsh: bad interpreter: No such file or directory
+mkdir build
+cd build/
+cmake ..
+make -j4
+make install
+
+cd $BUILD_PATH
+wget 172.17.0.1:8000/docker/goom-2k4-0-src.tar.gz
+tar xf goom-2k4-0-src.tar.gz
+cd goom2k4-0/
+./configure
+make
+make install
+
+## Failed with glib 1.2/1.3 building failure
+# wget 172.17.0.1:8000/docker/xmms-1.2.11.tar.bz2
+# tar xf xmms-1.2.11.tar.bz2
+# cd xmms-1.2.11
+# ./configure
+
+# https://sourceforge.net/projects/modplug-xmms/files/libmodplug/
+wget 172.17.0.1:8000/docker/libmodplug-0.8.9.0.tar.gz
+tar xf libmodplug-0.8.9.0.tar.gz
+cd libmodplug-0.8.9.0
+./configure
+make -j2
+make install
+
+cd $BUILD_PATH
+# https://www.videolan.org/vlc/download-sources.html
+wget 172.17.0.1:8000/vlc-3.0.10.tar.xz
+tar xf vlc-3.0.10.tar.xz
+cd vlc-3.0.10
+./configure --prefix=/home/yiloong/opt/vlc-3.0.10
+make -j4
+make install
+
+cd $BUILD_PATH
+mkdir ubuntu && cd ubuntu
+cp /usr/lib/x86_64-linux-gnu/libbluray.so.2 .
+cp /usr/lib/x86_64-linux-gnu/liba52-0.7.4.so .
+cp /usr/lib/x86_64-linux-gnu/libaribb24.so.0 .
+cp /usr/lib/x86_64-linux-gnu/libavcodec.so.57 .
+cp /usr/lib/x86_64-linux-gnu/libavutil.so.55 .
+cp /usr/lib/x86_64-linux-gnu/libBasicUsageEnvironment.so.1 .
+cp /usr/lib/x86_64-linux-gnu/libcddb.so.2 .
+cp /usr/lib/x86_64-linux-gnu/libdca.so.0 .
+cp /usr/lib/x86_64-linux-gnu/libdouble-conversion.so.1 .
+cp /usr/lib/x86_64-linux-gnu/libdvbpsi.so.10 .
+cp /usr/lib/x86_64-linux-gnu/libdvdnav.so.4 .
+cp /usr/lib/x86_64-linux-gnu/libfaad_drm.so.2 .
+cp /usr/lib/x86_64-linux-gnu/libfaad.so.2 .
+cp /usr/lib/x86_64-linux-gnu/libgroupsock.so.8 .
+cp /usr/lib/x86_64-linux-gnu/libgsm.so.1 .
+cp /usr/lib/x86_64-linux-gnu/libixml.so.2 .
+cp /usr/lib/x86_64-linux-gnu/libkate.so.1 .
+cp /usr/lib/x86_64-linux-gnu/libliveMedia.so.62 .
+cp /usr/lib/x86_64-linux-gnu/liblua5.2.so.0 .
+cp /usr/lib/x86_64-linux-gnu/libmad.so.0 .
+cp /usr/lib/x86_64-linux-gnu/libmatroska.so.6 .
+cp /usr/lib/x86_64-linux-gnu/libmpcdec.so.6 .
+cp /usr/lib/x86_64-linux-gnu/libmpeg2.so.0 .
+cp /usr/lib/x86_64-linux-gnu/libnfs.so.11 .
+cp /usr/lib/x86_64-linux-gnu/libopenjp2.so.7 .
+cp /usr/lib/x86_64-linux-gnu/libplacebo.so.4 .
+cp /usr/lib/x86_64-linux-gnu/libprotobuf-lite.so.10 .
+cp /usr/lib/x86_64-linux-gnu/libQt5X11Extras.so.5 .
+cp /usr/lib/x86_64-linux-gnu/libQt5Xml.so.5 .
+cp /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0 .
+cp /usr/lib/x86_64-linux-gnu/libSDL_image-1.2.so.0 .
+cp /usr/lib/x86_64-linux-gnu/libshine.so.3 .
+cp /usr/lib/x86_64-linux-gnu/libsnappy.so.1 .
+cp /usr/lib/x86_64-linux-gnu/libsoxr.so.0 .
+cp /usr/lib/x86_64-linux-gnu/libswresample.so.2 .
+cp /usr/lib/x86_64-linux-gnu/libswscale.so.4 .
+cp /usr/lib/x86_64-linux-gnu/libupnp.so.6 .
+cp /usr/lib/x86_64-linux-gnu/libUsageEnvironment.so.3 .
+cp /usr/lib/x86_64-linux-gnu/libvdpau.so.1 .
+cp /usr/lib/x86_64-linux-gnu/libvulkan.so.1 .
+cp /usr/lib/x86_64-linux-gnu/libx264.so.152 .
+cp /usr/lib/x86_64-linux-gnu/libx265.so.146 .
+cp /usr/lib/x86_64-linux-gnu/libxvidcore.so.4 .
+cp /usr/lib/x86_64-linux-gnu/libzvbi.so.0 .
+cp /usr/lib/x86_64-linux-gnu/libdvdread.so.4 .
+cp /usr/lib/x86_64-linux-gnu/libQt5Gui.so.5 .
+cp /usr/lib/x86_64-linux-gnu/libQt5Core.so.5 .
+cp /usr/lib/x86_64-linux-gnu/libQt5Widgets.so.5 .
+cp /usr/lib/x86_64-linux-gnu/libQt5Svg.so.5 .
+cp /usr/lib/x86_64-linux-gnu/libpcre16.so.3 .
+cp /usr/lib/x86_64-linux-gnu/libcrystalhd.so.3 .
+cp /usr/lib/x86_64-linux-gnu/libass.so.9 .
+mkdir own && cd own
+cp -d /usr/local/lib/lib* .
+cp -d /usr/local/lib/x86_64-linux-gnu/lib* .
+
+echo "SUCCESS"
+exit 0
+
+# for Ubuntu 20.04
+mkdir upload
+cd upload/
+cp /usr/lib/x86_64-linux-gnu/libbluray.so.2 .
+cp /usr/lib/x86_64-linux-gnu/liba52-0.7.4.so .
+cp /usr/lib/x86_64-linux-gnu/libaribb24.so.0 .
+cp /usr/lib/x86_64-linux-gnu/libavcodec.so.58 .
+cp /usr/lib/x86_64-linux-gnu/libavutil.so.56 .
+cp /usr/lib/x86_64-linux-gnu/libBasicUsageEnvironment.so.1 .
+cp /usr/lib/x86_64-linux-gnu/libcddb.so.2 .
+cp /usr/lib/x86_64-linux-gnu/libdca.so.0 .
+cp /usr/lib/x86_64-linux-gnu/libdouble-conversion.so.3 .
+cp /usr/lib/x86_64-linux-gnu/libdvbpsi.so.10 .
+cp /usr/lib/x86_64-linux-gnu/libdvdnav.so.4 .
+cp /usr/lib/x86_64-linux-gnu/libfaad_drm.so.2 .
+cp /usr/lib/x86_64-linux-gnu/libfaad.so.2 .
+cp /usr/lib/x86_64-linux-gnu/libgroupsock.so.8 .
+cp /usr/lib/x86_64-linux-gnu/libgsm.so.1 .
+cp /usr/lib/x86_64-linux-gnu/libixml.so.10 .
+cp /usr/lib/x86_64-linux-gnu/libkate.so.1 .
+cp /usr/lib/x86_64-linux-gnu/libliveMedia.so.77 .
+cp /usr/lib/x86_64-linux-gnu/liblua5.2.so.0 .
+cp /usr/lib/x86_64-linux-gnu/libmad.so.0 .
+cp /usr/lib/x86_64-linux-gnu/libmatroska.so.6 .
+cp /usr/lib/x86_64-linux-gnu/libmpcdec.so.6 .
+cp /usr/lib/x86_64-linux-gnu/libmpeg2.so.0 .
+cp /usr/lib/x86_64-linux-gnu/libnfs.so.13 .
+cp /usr/lib/x86_64-linux-gnu/libopenjp2.so.7 .
+cp /usr/lib/x86_64-linux-gnu/libplacebo.so.7 .
+cp /usr/lib/x86_64-linux-gnu/libprotobuf-lite.so.17 .
+cp /usr/lib/x86_64-linux-gnu/libQt5X11Extras.so.5 .
+cp /usr/lib/x86_64-linux-gnu/libQt5Xml.so.5 .
+cp /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0 .
+cp /usr/lib/x86_64-linux-gnu/libSDL_image-1.2.so.0 .
+cp /usr/lib/x86_64-linux-gnu/libshine.so.3 .
+cp /usr/lib/x86_64-linux-gnu/libsnappy.so.1 .
+cp /usr/lib/x86_64-linux-gnu/libsoxr.so.0 .
+cp /usr/lib/x86_64-linux-gnu/libswresample.so.3 .
+cp /usr/lib/x86_64-linux-gnu/libswscale.so.5 .
+cp /usr/lib/x86_64-linux-gnu/libupnp.so.13 .
+cp /usr/lib/x86_64-linux-gnu/libUsageEnvironment.so.3 .
+cp /usr/lib/x86_64-linux-gnu/libvdpau.so.1 .
+cp /usr/lib/x86_64-linux-gnu/libvulkan.so.1 .
+cp /usr/lib/x86_64-linux-gnu/libx264.so.155 .
+cp /usr/lib/x86_64-linux-gnu/libx265.so.179 .
+cp /usr/lib/x86_64-linux-gnu/libxvidcore.so.4 .
+cp /usr/lib/x86_64-linux-gnu/libzvbi.so.0 .
+cp /usr/lib/x86_64-linux-gnu/libdvdread.so.7 .
+cp /usr/lib/x86_64-linux-gnu/libQt5Gui.so.5 .
+cp /usr/lib/x86_64-linux-gnu/libQt5Core.so.5 .
+cp /usr/lib/x86_64-linux-gnu/libQt5Widgets.so.5 .
+cp /usr/lib/x86_64-linux-gnu/libQt5Svg.so.5 .
+cp /usr/lib/x86_64-linux-gnu/libpcre2-16.so.0 .
+
+echo "Build sucessfully"
+END_TIME=$(date +%s)
+echo "time to build: $((END_TIME-START_TIME))s"
+
+# Then need to tar /usr/local/lib
+## END
+
+# libva.txt
+apt-get build-dep libva
+wget 172.17.0.1:8000/libva_2.1.0.orig.tar.bz2
+./configure --disable-static --prefix=/home/yiloong/opt/libva2
+
