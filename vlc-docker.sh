@@ -127,6 +127,7 @@ cd vlc-3.0.10
 make -j4
 make install
 
+# Then need to copy libs
 cd $BUILD_PATH
 mkdir ubuntu && cd ubuntu
 cp /usr/lib/x86_64-linux-gnu/libbluray.so.2 .
@@ -198,6 +199,8 @@ cp /usr/lib/x86_64-linux-gnu/libssh2.so.1 .
 cp /usr/lib/x86_64-linux-gnu/libdc1394.so.22 .
 cp /usr/lib/x86_64-linux-gnu/libsndio.so.6.1 .
 cp /usr/lib/x86_64-linux-gnu/libthreadutil.so.6 .
+
+cd $BUILD_PATH
 mkdir own && cd own
 cp -d /usr/local/lib/lib* .
 cp -d /usr/local/lib/x86_64-linux-gnu/lib* .
@@ -206,7 +209,7 @@ echo "Build sucessfully"
 END_TIME=$(date +%s)
 echo "time to build: $((END_TIME-START_TIME))s"
 exit 0
-# Then need to tar /usr/local/lib
+
 ## END
 
 
