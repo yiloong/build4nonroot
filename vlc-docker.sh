@@ -1,6 +1,7 @@
 #!/bin/bash
 # Ubuntu 20.04 client need to install qt5-gtk-platformtheme
 # Updated on 2020-05-11 for vlc-3.0.10
+# Updated on 2020-07-16 for vlc-3.0.11
 set -e
 apt install -y bash-completion build-essential wget cmake unzip libgstreamer-plugins-base1.0-dev nasm ninja-build libpcsclite-dev libglib2.0-dev cmake-curses-gui pigz python3-setuptools bash-completion
 apt-get build-dep -y vlc
@@ -10,9 +11,9 @@ BUILD_PATH=$PWD
 
 cd $BUILD_PATH
 # https://github.com/mesonbuild/meson/releases
-wget 172.17.0.1:8000/docker/meson-0.54.1.tar.gz
-tar xf meson-0.54.1.tar.gz
-cd meson-0.54.1
+wget 172.17.0.1:8000/docker/meson-0.54.3.tar.gz
+tar xf meson-0.54.3.tar.gz
+cd meson-0.54.3
 python3 setup.py install
 
 cd $BUILD_PATH
@@ -56,7 +57,7 @@ ninja
 ninja install
 
 cd $BUILD_PATH
-wget 172.17.0.1:8000/vlcbuild/schroedinger-1.0.11.tar.gz
+wget 172.17.0.1:8000/docker/schroedinger-1.0.11.tar.gz
 tar xf schroedinger-1.0.11.tar.gz
 cd schroedinger-1.0.11
 ./configure
@@ -120,10 +121,10 @@ make install
 
 cd $BUILD_PATH
 # https://www.videolan.org/vlc/download-sources.html
-wget 172.17.0.1:8000/vlc-3.0.10.tar.xz
-tar xf vlc-3.0.10.tar.xz
-cd vlc-3.0.10
-./configure --prefix=/home/yiloong/opt/vlc-3.0.10
+wget 172.17.0.1:8000/vlc-3.0.11.tar.xz
+tar xf vlc-3.0.11.tar.xz
+cd vlc-3.0.11
+./configure --prefix=/home/yiloong/opt/vlc-3.0.11
 make -j4
 make install
 
@@ -192,13 +193,15 @@ cp /usr/lib/x86_64-linux-gnu/libwebpmux.so.3 .
 cp /usr/lib/x86_64-linux-gnu/libchromaprint.so.1 .
 cp /usr/lib/x86_64-linux-gnu/libopenmpt.so.0 .
 cp /usr/lib/x86_64-linux-gnu/libgme.so.0 .
-cp /usr/lib/x86_64-linux-gnu/libhardsid-builder.so.0 .
-cp /usr/lib/x86_64-linux-gnu/libresid-builder.so.0 .
-cp /usr/lib/x86_64-linux-gnu/libsidplay2.so.1 .
+# cp /usr/lib/x86_64-linux-gnu/libhardsid-builder.so.0 .
+# cp /usr/lib/x86_64-linux-gnu/libresid-builder.so.0 .
+# cp /usr/lib/x86_64-linux-gnu/libsidplay2.so.1 .
 cp /usr/lib/x86_64-linux-gnu/libssh2.so.1 .
 cp /usr/lib/x86_64-linux-gnu/libdc1394.so.22 .
 cp /usr/lib/x86_64-linux-gnu/libsndio.so.6.1 .
 cp /usr/lib/x86_64-linux-gnu/libthreadutil.so.6 .
+cp /usr/lib/libsidplay2.so.1 .
+cp /usr/lib/libresid-builder.so.0 .
 
 cd $BUILD_PATH
 mkdir own && cd own
