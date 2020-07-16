@@ -5,7 +5,7 @@ set -e
 
 START_TIME=$(date +%s)
 
-FREERDP_VER=2.1.1
+FREERDP_VER=2.1.2
 BUILD_PATH=$PWD
 DOWN_PATH="${HOME}/Downloads"
 RDP_PATH="/home/yiloong/opt/freerdp-$FREERDP_VER"
