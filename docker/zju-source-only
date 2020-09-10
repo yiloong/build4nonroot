@@ -1,11 +1,11 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
-RUN echo "deb http://mirrors.zju.edu.cn/ubuntu bionic main universe restricted multiverse" > /etc/apt/sources.list \
-    && echo "deb http://mirrors.zju.edu.cn/ubuntu bionic-security main universe restricted multiverse" >> /etc/apt/sources.list \
-    && echo "deb http://mirrors.zju.edu.cn/ubuntu bionic-updates main universe restricted multiverse" >> /etc/apt/sources.list \
-    && echo "deb http://mirrors.zju.edu.cn/ubuntu bionic-backports main universe restricted multiverse" >> /etc/apt/sources.list \
-    && echo "deb-src http://mirrors.zju.edu.cn/ubuntu bionic main universe restricted multiverse" >> /etc/apt/sources.list \
-    && echo "deb-src http://mirrors.zju.edu.cn/ubuntu bionic-security main universe restricted multiverse" >> /etc/apt/sources.list \
-    && echo "deb-src http://mirrors.zju.edu.cn/ubuntu bionic-updates main universe restricted multiverse" >> /etc/apt/sources.list \
-    && echo "deb-src http://mirrors.zju.edu.cn/ubuntu bionic-backports main universe restricted multiverse" >> /etc/apt/sources.list \
+RUN echo "deb http://mirrors.zju.edu.cn/ubuntu focal main universe restricted multiverse" > /etc/apt/sources.list \
+    && echo "deb http://mirrors.zju.edu.cn/ubuntu focal-security main universe restricted multiverse" >> /etc/apt/sources.list \
+    && echo "deb http://mirrors.zju.edu.cn/ubuntu focal-updates main universe restricted multiverse" >> /etc/apt/sources.list \
+    && echo "deb http://mirrors.zju.edu.cn/ubuntu focal-backports main universe restricted multiverse" >> /etc/apt/sources.list \
+    && echo "deb-src http://mirrors.zju.edu.cn/ubuntu focal main universe restricted multiverse" >> /etc/apt/sources.list \
+    && echo "deb-src http://mirrors.zju.edu.cn/ubuntu focal-security main universe restricted multiverse" >> /etc/apt/sources.list \
+    && echo "deb-src http://mirrors.zju.edu.cn/ubuntu focal-updates main universe restricted multiverse" >> /etc/apt/sources.list \
+    && echo "deb-src http://mirrors.zju.edu.cn/ubuntu focal-backports main universe restricted multiverse" >> /etc/apt/sources.list \
     && apt-get update 
