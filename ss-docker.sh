@@ -1,11 +1,11 @@
 #!/bin/bash
 # Auther: yiloong
-# Date: 2020-09-10
-# Ver: 1.4
+# Date: 2020-09-19
+# Ver: 1.5
 # Build shadowsocks-libev statically.
 # To build the final proj statically, all its depdpkgs needs built statically too.
 
-SS_VER="3.3.4"
+SS_VER="3.3.5"
 BUILD_PATH=$PWD
 DEP_PATH="${BUILD_PATH}/package-built"
 SS_PATH="${BUILD_PATH}/out/shadowsocks-libev-${SS_VER}"
