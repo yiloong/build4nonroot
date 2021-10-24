@@ -13,9 +13,9 @@ BUILD_PATH=$PWD
 
 cd $BUILD_PATH
 # https://github.com/mesonbuild/meson/releases
-wget 172.17.0.1:8000/docker/meson-0.56.2.tar.gz
-tar xf meson-0.56.2.tar.gz
-cd meson-0.56.2
+wget 172.17.0.1:8000/docker/meson-0.58.0.tar.gz
+tar xf meson-0.58.0.tar.gz
+cd meson-0.58.0
 python3 setup.py install
 
 cd $BUILD_PATH
@@ -29,9 +29,9 @@ make install
 
 cd $BUILD_PATH
 # https://code.videolan.org/videolan/dav1d
-wget 172.17.0.1:8000/docker/dav1d-0.8.1.tar.bz2
-tar xf dav1d-0.8.1.tar.bz2
-cd dav1d-0.8.1
+wget 172.17.0.1:8000/docker/dav1d-0.9.0.tar.bz2
+tar xf dav1d-0.9.0.tar.bz2
+cd dav1d-0.9.0
 meson builddir && cd builddir
 ninja
 ninja install
@@ -45,6 +45,7 @@ make -j4
 make install
 
 cd $BUILD_PATH
+# https://github.com/divideconcept/FluidLite
 wget 172.17.0.1:8000/docker/fluidlite.zip
 unzip -q fluidlite.zip
 cd FluidLite-master/
@@ -65,10 +66,10 @@ make
 make install
 
 cd $BUILD_PATH
-# https://github.com/Haivision/srt/releases
-wget 172.17.0.1:8000/docker/srt-1.4.2.tar.gz
-tar xf srt-1.4.2.tar.gz
-cd srt-1.4.2/
+# https://github.com/Haivision/srt/releases Library srt >= 1.2.2 srt < 1.3.0 needed
+wget 172.17.0.1:8000/docker/srt-1.2.3.tar.gz
+tar xf srt-1.2.3.tar.gz
+cd srt-1.2.3/
 # ?? ./configure
 #  -bash: ./configure: /usr/bin/tclsh: bad interpreter: No such file or directory
 mkdir build
@@ -102,13 +103,13 @@ make install
 
 cd $BUILD_PATH
 # https://www.videolan.org/vlc/download-sources.html
-wget 172.17.0.1:8000/vlc-3.0.12.tar.xz
-tar xf vlc-3.0.12.tar.xz
-cd vlc-3.0.12
-# see https://github.com/Haivision/srt/issues/1210#issuecomment-707032114
-sed -i 's/SRTO_TSBPDDELAY/SRTO_LATENCY/g' modules/access/srt.c
-sed -i 's/SRTO_TSBPDDELAY/SRTO_LATENCY/g' modules/access_output/srt.c
-./configure --prefix=/home/yiloong/opt/vlc-3.0.12
+wget 172.17.0.1:8000/vlc-3.0.14.tar.xz
+tar xf vlc-3.0.14.tar.xz
+cd vlc-3.0.14
+## see https://github.com/Haivision/srt/issues/1210#issuecomment-707032114
+#sed -i 's/SRTO_TSBPDDELAY/SRTO_LATENCY/g' modules/access/srt.c
+#sed -i 's/SRTO_TSBPDDELAY/SRTO_LATENCY/g' modules/access_output/srt.c
+./configure --prefix=/home/yiloong/opt/vlc-3.0.14
 make -j4
 make install
 
